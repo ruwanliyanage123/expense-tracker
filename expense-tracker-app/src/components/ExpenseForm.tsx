@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 
 interface Expense {
+    title: string;
     amount: number;
-    reason: string;
+    note: string;
     type: string;
     date: string;
 }
 
 const ExpenseForm  = () => {
     const [expense, setExpense] = useState<Expense>({
+        title: "",
         amount: 0,
-        reason: "",
+        note: "",
         type: "",
         date: "",
     });
@@ -30,20 +32,20 @@ const ExpenseForm  = () => {
             <h2 className="text-xl font-semibold mb-4 text-gray-700">Add New Expense</h2>
             <div className="space-y-4">
                 <input
+                    type="text"
+                    name="title"
+                    value={expense.title}
+                    onChange={handleChange}
+                    placeholder="Title"
+                    className="w-full p-2 border rounded"
+                    required
+                />
+                <input
                     type="number"
                     name="amount"
                     value={expense.amount}
                     onChange={handleChange}
                     placeholder="Expense Amount"
-                    className="w-full p-2 border rounded"
-                    required
-                />
-                <input
-                    type="text"
-                    name="reason"
-                    value={expense.reason}
-                    onChange={handleChange}
-                    placeholder="Reason"
                     className="w-full p-2 border rounded"
                     required
                 />
@@ -68,6 +70,14 @@ const ExpenseForm  = () => {
                     onChange={handleChange}
                     className="w-full p-2 border rounded"
                     required
+                />
+                <input
+                    type="text"
+                    name="note"
+                    value={expense.note}
+                    onChange={handleChange}
+                    placeholder="Note(Optional)"
+                    className="w-full p-2 border rounded"
                 />
                 <button
                     type="submit"
