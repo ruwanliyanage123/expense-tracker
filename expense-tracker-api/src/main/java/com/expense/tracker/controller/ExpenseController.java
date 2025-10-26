@@ -21,8 +21,8 @@ public class ExpenseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExpenseDto>> getAll() {
-        return ResponseEntity.ok(expenseService.getAllExpenses());
+    public ResponseEntity<List<ExpenseDto>> getAll(@RequestParam(value = "userId", required = false) Long userId) {
+        return ResponseEntity.ok(expenseService.getAllExpenses(userId));
     }
 
     @GetMapping("/{id}")
