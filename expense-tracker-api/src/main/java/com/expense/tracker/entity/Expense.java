@@ -16,6 +16,7 @@ public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long userId;
     private BigDecimal amount;
     private String reason;
     private String type;

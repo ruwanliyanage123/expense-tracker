@@ -7,6 +7,7 @@ public class ExpenseMapper {
     public static ExpenseDto toDto(Expense expense) {
         return ExpenseDto.builder()
                 .id(expense.getId())
+                .userId(expense.getUserId())
                 .amount(expense.getAmount())
                 .reason(expense.getReason())
                 .type(expense.getType())
@@ -18,6 +19,7 @@ public class ExpenseMapper {
         return Expense.builder()
                 .id(dto.getId())
                 .amount(dto.getAmount())
+                .userId(dto.getUserId())
                 .reason(dto.getReason())
                 .type(dto.getType())
                 .date(dto.getDate())

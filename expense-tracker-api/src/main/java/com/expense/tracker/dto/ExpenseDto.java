@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Builder
 public class ExpenseDto {
     private Long id;
+    private Long userId;
     private BigDecimal amount;
     private String reason;
     private String type;
