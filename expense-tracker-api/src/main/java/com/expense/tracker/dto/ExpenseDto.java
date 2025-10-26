@@ -1,0 +1,18 @@
+package com.expense.tracker.dto;
+
+import lombok.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class ExpenseDto {
+    private Long id;
+    private BigDecimal amount;
+    private String reason;
+    private String type;
+    private LocalDate date;
+}
