@@ -1,4 +1,3 @@
-import React from "react";
 import ExpenseForm from "../components/ExpenseForm";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
@@ -14,12 +13,9 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 const Dashboard= () => {
     return (
         <div className="flex flex-row gap-6 p-6">
-            {/* Left Side */}
             <div className="w-1/2">
                 <ExpenseForm />
             </div>
-
-            {/* Right Side */}
             <div className="w-1/2 bg-white shadow-md rounded-lg p-6 flex flex-col items-center justify-center">
                 <h2 className="text-xl font-semibold mb-4 text-gray-700">
                     Current Month Expenses
