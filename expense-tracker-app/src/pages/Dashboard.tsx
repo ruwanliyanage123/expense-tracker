@@ -57,7 +57,7 @@ const Dashboard: React.FC = () => {
                 </h2>
 
                 {chartData.length === 0 ? (
-                    <p className="text-gray-500">No expense data available.</p>
+                    <p className="text-gray-500">No expense data available. Add values to see the chart</p>
                 ) : (
                     <PieChart width={350} height={350}>
                         <Pie
