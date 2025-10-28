@@ -13,7 +13,8 @@ public class ExpenseDto {
     private Long id;
     private Long userId;
     private BigDecimal amount;
-    private String reason;
+    private String title;
+    private String note;
     private String type;
     private LocalDate date;
 }

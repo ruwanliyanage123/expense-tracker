@@ -9,8 +9,9 @@ public class ExpenseMapper {
                 .id(expense.getId())
                 .userId(expense.getUserId())
                 .amount(expense.getAmount())
-                .reason(expense.getReason())
+                .note(expense.getNote())
                 .type(expense.getType())
+                .title(expense.getTitle())
                 .date(expense.getDate())
                 .build();
     }
@@ -20,7 +21,8 @@ public class ExpenseMapper {
                 .id(dto.getId())
                 .amount(dto.getAmount())
                 .userId(dto.getUserId())
-                .reason(dto.getReason())
+                .note(dto.getNote())
+                .title(dto.getTitle())
                 .type(dto.getType())
                 .date(dto.getDate())
                 .build();

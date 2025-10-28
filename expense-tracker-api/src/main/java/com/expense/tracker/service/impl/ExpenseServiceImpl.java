@@ -28,7 +28,8 @@ public class ExpenseServiceImpl implements ExpenseService {
         Expense existing = expenseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Expense not found"));
         existing.setAmount(dto.getAmount());
-        existing.setReason(dto.getReason());
+        existing.setNote(dto.getNote());
+        existing.setTitle(dto.getTitle());
         existing.setType(dto.getType());
         existing.setDate(dto.getDate());
         return ExpenseMapper.toDto(expenseRepository.save(existing));
