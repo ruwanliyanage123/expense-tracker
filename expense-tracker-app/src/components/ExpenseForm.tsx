@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import {createExpense} from "../service/expenseService";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../redux/store";
+import { addExpense } from "../redux/expenseSlice";
 
 interface Expense {
     title: string;
@@ -10,7 +12,8 @@ interface Expense {
     userId: number;
 }
 
-const ExpenseForm  = () => {
+const ExpenseForm: React.FC = () => {
+    const dispatch = useDispatch<AppDispatch>();
     const [expense, setExpense] = useState<Expense>({
         title: "",
         amount: 0,
@@ -20,22 +23,38 @@ const ExpenseForm  = () => {
         userId: 1,
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { loading } = useSelector((state: any) => state.expenses);
+
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
         setExpense({ ...expense, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        try {
-            await createExpense(expense);
-        }catch(err) {
-            console.log(err);
+        if (!expense.title || !expense.amount || !expense.type || !expense.date) {
+            alert("Please fill all required fields!");
+            return;
         }
+        dispatch(addExpense(expense));
+        setExpense({
+            title: "",
+            amount: 0,
+            note: "",
+            type: "",
+            date: "",
+            userId: 1,
+        });
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-white shadow-md p-6 rounded-lg w-full">
+        <form
+            onSubmit={handleSubmit}
+            className="bg-white shadow-md p-6 rounded-lg w-full"
+        >
             <h2 className="text-xl font-semibold mb-4 text-gray-700">Add New Expense</h2>
+
             <div className="space-y-4">
                 <input
                     type="text"
@@ -46,6 +65,7 @@ const ExpenseForm  = () => {
                     className="w-full p-2 border rounded"
                     required
                 />
+
                 <input
                     type="number"
                     name="amount"
@@ -55,6 +75,7 @@ const ExpenseForm  = () => {
                     className="w-full p-2 border rounded"
                     required
                 />
+
                 <select
                     name="type"
                     value={expense.type}
@@ -69,6 +90,7 @@ const ExpenseForm  = () => {
                     <option value="Bills">Bills</option>
                     <option value="Other">Other</option>
                 </select>
+
                 <input
                     type="date"
                     name="date"
@@ -77,19 +99,24 @@ const ExpenseForm  = () => {
                     className="w-full p-2 border rounded"
                     required
                 />
+
                 <input
                     type="text"
                     name="note"
                     value={expense.note}
                     onChange={handleChange}
-                    placeholder="Note(Optional)"
+                    placeholder="Note (Optional)"
                     className="w-full p-2 border rounded"
                 />
+
                 <button
                     type="submit"
-                    className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                    disabled={loading}
+                    className={`w-full text-white py-2 rounded transition ${
+                        loading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+                    }`}
                 >
-                    Add Expense
+                    {loading ? "Saving..." : "Add Expense"}
                 </button>
             </div>
         </form>

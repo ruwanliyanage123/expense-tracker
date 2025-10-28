@@ -2,7 +2,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import expenseReducer from "./expenseSlice";
 
 export const store = configureStore({
-    reducer: { expense: expenseReducer },
+    reducer: {
+        expenses: expenseReducer,
+    },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
