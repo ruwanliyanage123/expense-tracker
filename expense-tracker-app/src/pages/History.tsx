@@ -8,6 +8,7 @@ import {
 
 interface Expense {
     id: number;
+    title: string;
     userId: number;
     amount: number;
     reason: string;
@@ -26,6 +27,7 @@ const History = () => {
     const [editingId, setEditingId] = useState<number | null>(null);
     const [formData, setFormData] = useState<Partial<Expense>>({
         amount: 0,
+        title: "",
         reason: "",
         type: "",
         date: "",
@@ -63,6 +65,7 @@ const History = () => {
         setEditingId(expense.id);
         setFormData({
             amount: expense.amount,
+            title: expense.title,
             reason: expense.reason,
             type: expense.type,
             date: expense.date,
@@ -83,7 +86,7 @@ const History = () => {
                 <thead className="bg-gray-100">
                 <tr>
                     <th className="p-3 border">Date</th>
-                    <th className="p-3 border">Reason</th>
+                    <th className="p-3 border">Title</th>
                     <th className="p-3 border">Type</th>
                     <th className="p-3 border">Amount</th>
                     <th className="p-3 border">Actions</th>
@@ -113,7 +116,7 @@ const History = () => {
                                     </td>
                                     <td className="p-2 border">
                                         <input
-                                            value={formData.reason}
+                                            value={formData.title}
                                             onChange={(e) =>
                                                 setFormData({ ...formData, reason: e.target.value })
                                             }
@@ -160,7 +163,7 @@ const History = () => {
                             ) : (
                                 <>
                                     <td className="p-2 border">{expense.date}</td>
-                                    <td className="p-2 border">{expense.reason}</td>
+                                    <td className="p-2 border">{expense.title}</td>
                                     <td className="p-2 border">{expense.type}</td>
                                     <td className="p-2 border text-right">{expense.amount}</td>
                                     <td className="p-2 border">

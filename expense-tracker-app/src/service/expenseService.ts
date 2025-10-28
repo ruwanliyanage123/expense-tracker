@@ -5,7 +5,7 @@ export const fetchExpenses = async (userId: number) => {
     return data;
 };
 
-export const createExpense = async (expense:number) => {
+export const createExpense = async (expense: any) => {
     const { data } = await apiClient.post("/expenses", expense);
     return data;
 };

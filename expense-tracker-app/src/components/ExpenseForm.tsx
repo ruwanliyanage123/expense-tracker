@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {createExpense} from "../service/expenseService";
 
 interface Expense {
     title: string;
@@ -6,6 +7,7 @@ interface Expense {
     note: string;
     type: string;
     date: string;
+    userId: number;
 }
 
 const ExpenseForm  = () => {
@@ -15,16 +17,20 @@ const ExpenseForm  = () => {
         note: "",
         type: "",
         date: "",
+        userId: 1,
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setExpense({ ...expense, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(expense);
-        alert("Expense added!");
+        try {
+            await createExpense(expense);
+        }catch(err) {
+            console.log(err);
+        }
     };
 
     return (
