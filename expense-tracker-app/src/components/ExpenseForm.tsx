@@ -3,18 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../redux/store";
 import { addExpense } from "../redux/expenseSlice";
 
-interface Expense {
-    title: string;
-    amount: number;
-    note: string;
-    type: string;
-    date: string;
-    userId: number;
-}
-
 const ExpenseForm: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const [expense, setExpense] = useState<Expense>({
+    const { loading } = useSelector((state: any) => state.expenses);
+
+    const [expense, setExpense] = useState({
         title: "",
         amount: 0,
         note: "",
@@ -23,11 +16,7 @@ const ExpenseForm: React.FC = () => {
         userId: 1,
     });
 
-    const { loading } = useSelector((state: any) => state.expenses);
-
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-    ) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setExpense({ ...expense, [e.target.name]: e.target.value });
     };
 
@@ -49,12 +38,8 @@ const ExpenseForm: React.FC = () => {
     };
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="bg-white shadow-md p-6 rounded-lg w-full"
-        >
+        <form onSubmit={handleSubmit} className="bg-white shadow-md p-6 rounded-lg w-full">
             <h2 className="text-xl font-semibold mb-4 text-gray-700">Add New Expense</h2>
-
             <div className="space-y-4">
                 <input
                     type="text"
@@ -65,7 +50,6 @@ const ExpenseForm: React.FC = () => {
                     className="w-full p-2 border rounded"
                     required
                 />
-
                 <input
                     type="number"
                     name="amount"
@@ -75,7 +59,6 @@ const ExpenseForm: React.FC = () => {
                     className="w-full p-2 border rounded"
                     required
                 />
-
                 <select
                     name="type"
                     value={expense.type}
@@ -90,7 +73,6 @@ const ExpenseForm: React.FC = () => {
                     <option value="Bills">Bills</option>
                     <option value="Other">Other</option>
                 </select>
-
                 <input
                     type="date"
                     name="date"
@@ -99,7 +81,6 @@ const ExpenseForm: React.FC = () => {
                     className="w-full p-2 border rounded"
                     required
                 />
-
                 <input
                     type="text"
                     name="note"
@@ -108,7 +89,6 @@ const ExpenseForm: React.FC = () => {
                     placeholder="Note (Optional)"
                     className="w-full p-2 border rounded"
                 />
-
                 <button
                     type="submit"
                     disabled={loading}
@@ -123,4 +103,4 @@ const ExpenseForm: React.FC = () => {
     );
 };
 
-export default ExpenseForm;
+export default ExpenseForm; // ✅ make sure this exists

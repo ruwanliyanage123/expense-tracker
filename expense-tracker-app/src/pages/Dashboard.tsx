@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ExpenseForm from "../components/ExpenseForm";
-import { getExpenses } from "../redux/expenseSlice";
+import { getExpenses, setOffline, syncExpenses } from "../redux/expenseSlice";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
 export const COLORS = ["#2563EB", "#16A34A", "#FACC15", "#F97316", "#EC4899", "#8B5CF6", "#0EA5E9", "#EF4444"];
@@ -11,11 +11,31 @@ const Dashboard: React.FC = () => {
     const userId = 1;
     const { data: expenses, loading } = useSelector((state: any) => state.expenses);
 
+    // Fetch on mount
     useEffect(() => {
         // @ts-ignore
         dispatch(getExpenses(userId));
+
+        const updateStatus = () => {
+            const online = navigator.onLine;
+            dispatch(setOffline(!online));
+            if (online) {
+                // @ts-ignore
+                dispatch(syncExpenses());
+            }
+        };
+
+        window.addEventListener("online", updateStatus);
+        window.addEventListener("offline", updateStatus);
+
+        updateStatus(); // initial
+        return () => {
+            window.removeEventListener("online", updateStatus);
+            window.removeEventListener("offline", updateStatus);
+        };
     }, [dispatch]);
 
+    // Group data for Pie chart
     const chartData = useMemo(() => {
         const grouped: Record<string, number> = {};
         expenses.forEach((expense: any) => {
