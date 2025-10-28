@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: expense_postgres
+    environment:
+      POSTGRES_DB: expense_tracker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1994
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - expense_net
+
+  backend:
+    build:
+      context: ./expense-tracker-api
+    container_name: expense_backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/expense_tracker
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 1994
+      SERVER_PORT: 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - expense_net
+
+  frontend:
+    build:
+      context: ./expense-tracker-app
+    container_name: expense_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    environment:
+      # adjust if using Vite
+      REACT_APP_API_BASE_URL: http://localhost:8080/api/v1
+    networks:
+      - expense_net
+
+volumes:
+  postgres_data:
+
+networks:
+  expense_net:
+    driver: bridge

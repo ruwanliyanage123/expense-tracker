@@ -6,7 +6,7 @@ const Navbar: React.FC = () => {
 
     return (
         <nav className="bg-blue-700 text-white p-4 flex justify-between items-center shadow">
-            <h1 className="text-2xl font-bold">💰 Expense Tracker</h1>
+            <h1 className="text-2xl font-bold">💰 E-Wallet</h1>
 
             <div className="flex items-center gap-4">
                 {offline ? (
